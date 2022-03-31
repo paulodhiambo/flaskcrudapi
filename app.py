@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import fields
-from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy import SQLAlchemySchema, auto_field
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost:3306/todo'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost:3306/todo'
 db = SQLAlchemy(app)
 
 
@@ -31,8 +31,8 @@ class Todo(db.Model):
 db.create_all()
 
 
-class TodoSchema(ModelSchema):
-    class Meta(ModelSchema.Meta):
+class TodoSchema(SQLAlchemySchema):
+    class Meta(SQLAlchemySchema.Meta):
         model = Todo
         sqla_session = db.session
 
